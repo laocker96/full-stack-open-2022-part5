@@ -1,6 +1,5 @@
 import { useState } from "react"
 import loginService from "../services/login"
-import blogsService from "../services/blogs"
 
 const LoginForm = ({ setUser }) => {
 
@@ -12,8 +11,8 @@ const LoginForm = ({ setUser }) => {
         event.preventDefault()
 
         loginService.authenticate({ username, password }).then((user) => {
-            blogsService.setToken(user.token)
-            setUser(user) 
+            window.localStorage.setItem('loggedBlogsAppUser', JSON.stringify(user))
+            setUser(user)
             setUsername('')
             setPassword('')
         }).catch((error) => {
@@ -28,11 +27,11 @@ const LoginForm = ({ setUser }) => {
     return <form onSubmit={handleLogin}>
         <div>
             username
-            <input type="text" name="Username" value={username} onChange={({target}) => setUsername(target.value)}></input>
+            <input type="text" name="Username" value={username} onChange={({ target }) => setUsername(target.value)}></input>
         </div>
         <div>
             password
-            <input type="password" name="Password" value={password} onChange={({target}) => setPassword(target.value)}></input>
+            <input type="password" name="Password" value={password} onChange={({ target }) => setPassword(target.value)}></input>
         </div>
         <button type="submit">login</button>
         <p style={{ color: "red" }}>{loginError}</p>

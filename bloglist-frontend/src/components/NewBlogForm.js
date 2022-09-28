@@ -1,12 +1,11 @@
 import { useState } from "react"
 import blogsService from "../services/blogs"
 
-const NewBlogForm = ({ setBlogs }) => {
+const NewBlogForm = ({ setBlogs, setNotification }) => {
 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
-    const [newBlogError, setNewBlogError] = useState(null)
 
     const handleNewBlog = (event) => {
         event.preventDefault()
@@ -14,12 +13,14 @@ const NewBlogForm = ({ setBlogs }) => {
             setTitle('')
             setAuthor('')
             setUrl('')
+            setNotification({ message: `a new blog ${savedBlog.title} by ${savedBlog.author} added`, class: "info" })
+            setTimeout(() => setNotification(null), 5000)
             blogsService.getAll().then(blogs =>
                 setBlogs(blogs)
             )
         }).catch((error) => {
-            setNewBlogError("Can't save new blog")
-            setTimeout(() => setNewBlogError(null), 5000)
+            setNotification({ message: "Can't save new blog", class: "error" })
+            setTimeout(() => setNotification(null), 5000)
         })
 
     }
@@ -38,7 +39,6 @@ const NewBlogForm = ({ setBlogs }) => {
             <input type="text" name="Url" value={url} onChange={({ target }) => setUrl(target.value)}></input>
         </div>
         <button type="submit">create</button>
-        <p style={{ color: "red" }}>{newBlogError}</p>
     </form >
 }
 

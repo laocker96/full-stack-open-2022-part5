@@ -1,11 +1,10 @@
 import { useState } from "react"
 import loginService from "../services/login"
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = ({ setUser, setNotification }) => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [loginError, setLoginError] = useState(null)
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -15,11 +14,11 @@ const LoginForm = ({ setUser }) => {
             setUser(user)
             setUsername('')
             setPassword('')
+            setNotification({ message: `Welcome back ${user.name}`, class: "info" })
+            setTimeout(() => setNotification(null), 5000)
         }).catch((error) => {
-            setLoginError('Wrong credentials')
-            setTimeout(() => {
-                setLoginError(null)
-            }, 5000)
+            setNotification({ message: "Wrong credentials", class: "error" })
+            setTimeout(() => setNotification(null), 5000)
         })
     }
 
@@ -33,7 +32,6 @@ const LoginForm = ({ setUser }) => {
             <input type="password" name="Password" value={password} onChange={({ target }) => setPassword(target.value)}></input>
         </div>
         <button type="submit">login</button>
-        <p style={{ color: "red" }}>{loginError}</p>
     </form>
 
 }

@@ -44,7 +44,7 @@ const App = () => {
           <h2>blogs</h2>
           <Notification notification={notification} />
           <p>{user.name} logged in<button onClick={handleLogout}>log out</button></p>
-          <Toggable buttonLabel={"new blog"} >{
+          <Toggable buttonLabel={"create new blog"} >{
             (toggleVisibility) => (
               <NewBlogForm setBlogs={setBlogs} setNotification={setNotification} toggleVisibility={toggleVisibility} />
             )

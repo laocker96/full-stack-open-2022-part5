@@ -13,6 +13,7 @@ const getAll = async () => {
       Authorization: token
     }
   }
+
   const request = axios.get(baseUrl, config)
   return request.then(response => response.data)
 }
@@ -23,10 +24,23 @@ const saveBlog = async (blog) => {
       Authorization: token
     }
   }
+
   const request = axios.post(baseUrl, blog, config)
   return request.then(response => response.data)
 }
 
-const blogsService = { getAll, saveBlog, setToken }
+const updateBlog = async (blog) => {
+  console.log(blog)
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  }
+
+  const request = axios.put(`${baseUrl}/${blog.id}`, blog, config)
+  return request.then(response => response.data)
+}
+
+const blogsService = { getAll, saveBlog, updateBlog, setToken }
 
 export default blogsService

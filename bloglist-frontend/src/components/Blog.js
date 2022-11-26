@@ -34,7 +34,7 @@ const Blog = ({ blog, setBlogs, setNotification }) => {
         <div style={blogStyle}>
           <url>{blog.url}</url>
           <div>
-            likes{blog.likes}
+            likes {blog.likes}
             <button onClick={() => addLike(blog)}>like</button>
           </div>
           <div>

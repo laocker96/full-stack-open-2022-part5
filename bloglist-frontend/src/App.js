@@ -31,6 +31,11 @@ const App = () => {
     setTimeout(() => setNotification(null), 5000)
   }
 
+  const compareBlogs = (a, b) => {
+    return b.likes - a.likes
+    ;
+  }
+
   return (
     <div>
       {!user ?
@@ -50,7 +55,7 @@ const App = () => {
             )
           }
           </Toggable>
-          {blogs.map(blog =>
+          {blogs.sort(compareBlogs).map(blog =>
             <Blog key={blog.id} blog={blog} setBlogs={setBlogs} setNotification={setNotification} />
           )}
         </div>

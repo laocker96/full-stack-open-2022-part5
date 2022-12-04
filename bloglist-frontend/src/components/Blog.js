@@ -1,7 +1,7 @@
 import { useState } from "react";
 import blogsService from "../services/blogs";
 
-const Blog = ({ blog, setBlogs, setNotification }) => {
+const Blog = ({ user, blog, setBlogs, setNotification }) => {
 
   const [detailsVisible, setDetailsVisible] = useState(false);
 
@@ -24,6 +24,21 @@ const Blog = ({ blog, setBlogs, setNotification }) => {
     });
   }
 
+  const removeBlog = (blog) => {
+    if (window.confirm(`Remove ${blog.title} by ${blog.author}`)) {
+      blogsService.removeBlog(blog).then(() => {
+        setNotification({ message: `Bloggerd removed`, class: "info" })
+        setTimeout(() => setNotification(null), 5000)
+        blogsService.getAll().then(blogs =>
+          setBlogs(blogs)
+        )
+      }).catch((error) => {
+        setNotification({ message: "Can't remove blog", class: "error" })
+        setTimeout(() => setNotification(null), 5000)
+      });
+    }
+  }
+
   return (
     <>
       <div style={blogStyle}>
@@ -32,7 +47,7 @@ const Blog = ({ blog, setBlogs, setNotification }) => {
       </div>
       {detailsVisible &&
         <div style={blogStyle}>
-          <url>{blog.url}</url>
+          <a href={blog.url}>{blog.url}</a>
           <div>
             likes {blog.likes}
             <button onClick={() => addLike(blog)}>like</button>
@@ -40,6 +55,9 @@ const Blog = ({ blog, setBlogs, setNotification }) => {
           <div>
             {blog.user ? blog.user.name : ''} {/*This is because initial blogs were not created with a user logged in*/}
           </div>
+          {user.name === blog?.user?.name &&
+            <button onClick={() => removeBlog(blog)}>remove</button>
+          }
         </div>
       }
     </>

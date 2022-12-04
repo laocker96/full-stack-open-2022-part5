@@ -30,7 +30,6 @@ const saveBlog = async (blog) => {
 }
 
 const updateBlog = async (blog) => {
-  console.log(blog)
   const config = {
     headers: {
       Authorization: token
@@ -41,6 +40,17 @@ const updateBlog = async (blog) => {
   return request.then(response => response.data)
 }
 
-const blogsService = { getAll, saveBlog, updateBlog, setToken }
+const removeBlog = async (blog) => {
+  const config = {
+    headers: {
+      Authorization: token
+    }
+  }
+
+  const request = axios.delete(`${baseUrl}/${blog.id}`, config)
+  return request.then(response => response.data)
+}
+
+const blogsService = { getAll, saveBlog, updateBlog, removeBlog, setToken }
 
 export default blogsService

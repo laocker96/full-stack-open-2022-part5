@@ -16,13 +16,16 @@ const App = () => {
   useEffect(() => {
     const user = JSON.parse(window.localStorage.getItem('loggedBlogsAppUser'))
     setUser(user)
+  }, [])
+
+  useEffect(() => {
     if (user) {
       blogsService.setToken(user.token)
       blogsService.getAll().then(blogs =>
         setBlogs(blogs)
       )
     }
-  }, [])
+  }, [user])
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogsAppUser')
@@ -33,7 +36,7 @@ const App = () => {
 
   const compareBlogs = (a, b) => {
     return b.likes - a.likes
-    ;
+      ;
   }
 
   return (
@@ -56,7 +59,7 @@ const App = () => {
           }
           </Toggable>
           {blogs.sort(compareBlogs).map(blog =>
-            <Blog key={blog.id} blog={blog} setBlogs={setBlogs} setNotification={setNotification} />
+            <Blog key={blog.id} user={user} blog={blog} setBlogs={setBlogs} setNotification={setNotification} />
           )}
         </div>
       }

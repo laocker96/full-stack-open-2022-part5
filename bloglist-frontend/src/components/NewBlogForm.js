@@ -1,5 +1,5 @@
-import { useState } from "react"
-import blogsService from "../services/blogs"
+import { useState } from 'react'
+import blogsService from '../services/blogs'
 
 const NewBlogForm = ({ setBlogs, setNotification, toggleVisibility }) => {
 
@@ -14,13 +14,13 @@ const NewBlogForm = ({ setBlogs, setNotification, toggleVisibility }) => {
             setAuthor('')
             setUrl('')
             toggleVisibility(false)
-            setNotification({ message: `a new blog ${savedBlog.title} by ${savedBlog.author} added`, class: "info" })
+            setNotification({ message: `a new blog ${savedBlog.title} by ${savedBlog.author} added`, class: 'info' })
             setTimeout(() => setNotification(null), 5000)
             blogsService.getAll().then(blogs =>
                 setBlogs(blogs)
             )
-        }).catch((error) => {
-            setNotification({ message: "Can't save new blog", class: "error" })
+        }).catch(() => {
+            setNotification({ message: 'Can\'t save new blog', class: 'error' })
             setTimeout(() => setNotification(null), 5000)
         })
 
@@ -45,7 +45,7 @@ const NewBlogForm = ({ setBlogs, setNotification, toggleVisibility }) => {
                 <button type="submit">create</button>
             </form >
         </>
-    );
+    )
 }
 
 export default NewBlogForm

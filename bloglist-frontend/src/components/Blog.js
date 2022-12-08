@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react'
 import PropTypes from 'prop-types'
- 
-import blogsService from "../services/blogs";
+import blogsService from '../services/blogs'
 
 
 const Blog = ({ user, blog, setBlogs, setNotification }) => {
 
-  const [detailsVisible, setDetailsVisible] = useState(false);
+  const [detailsVisible, setDetailsVisible] = useState(false)
 
   const blogStyle = {
     paddingTop: 10,
@@ -21,24 +20,24 @@ const Blog = ({ user, blog, setBlogs, setNotification }) => {
       blogsService.getAll().then(blogs =>
         setBlogs(blogs)
       )
-    }).catch((error) => {
-      setNotification({ message: "Can't add like to blog", class: "error" })
+    }).catch(() => {
+      setNotification({ message: 'Can\'t add like to blog', class: 'error' })
       setTimeout(() => setNotification(null), 5000)
-    });
+    })
   }
 
   const removeBlog = (blog) => {
     if (window.confirm(`Remove ${blog.title} by ${blog.author}`)) {
       blogsService.removeBlog(blog).then(() => {
-        setNotification({ message: `Bloggerd removed`, class: "info" })
+        setNotification({ message: 'Bloggerd removed', class: 'info' })
         setTimeout(() => setNotification(null), 5000)
         blogsService.getAll().then(blogs =>
           setBlogs(blogs)
         )
-      }).catch((error) => {
-        setNotification({ message: "Can't remove blog", class: "error" })
+      }).catch(() => {
+        setNotification({ message: 'Can\'t remove blog', class: 'error' })
         setTimeout(() => setNotification(null), 5000)
-      });
+      })
     }
   }
 
@@ -58,7 +57,7 @@ const Blog = ({ user, blog, setBlogs, setNotification }) => {
           <div>
             {blog.user ? blog.user.name : ''} {/*This is because initial blogs were not created with a user logged in*/}
           </div>
-          {user.name === blog?.user?.name &&
+          {blog.user && user.name === blog.user.name &&
             <button onClick={() => removeBlog(blog)}>remove</button>
           }
         </div>
@@ -70,7 +69,7 @@ const Blog = ({ user, blog, setBlogs, setNotification }) => {
 Blog.propTypes = {
   user: PropTypes.any.isRequired,
   blog: PropTypes.any.isRequired,
-  setBlogs: PropTypes.func.isRequired, 
+  setBlogs: PropTypes.func.isRequired,
   setNotification: PropTypes.func.isRequired
 }
 

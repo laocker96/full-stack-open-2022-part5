@@ -1,6 +1,6 @@
 const Notification = ({ notification }) => {
     if (notification === null) {
-        return null;
+        return null
     }
 
     return (
@@ -10,4 +10,4 @@ const Notification = ({ notification }) => {
     )
 }
 
-export default Notification;
+export default Notification

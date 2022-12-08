@@ -3,8 +3,7 @@ import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import NewBlogForm from './components/NewBlogForm'
 import blogsService from './services/blogs'
-
-import './notification.css';
+import './notification.css'
 import Notification from './components/Notification'
 import Toggable from './components/Toggable'
 
@@ -29,14 +28,13 @@ const App = () => {
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogsAppUser')
-    setNotification({ message: `${user.name} logged out.`, class: "info" })
+    setNotification({ message: `${user.name} logged out.`, class: 'info' })
     setUser(null)
     setTimeout(() => setNotification(null), 5000)
   }
 
   const compareBlogs = (a, b) => {
     return b.likes - a.likes
-      ;
   }
 
   return (
@@ -52,11 +50,12 @@ const App = () => {
           <h2>blogs</h2>
           <Notification notification={notification} />
           <p>{user.name} logged in<button onClick={handleLogout}>log out</button></p>
-          <Toggable buttonLabel={"create new blog"} >{
-            (toggleVisibility) => (
-              <NewBlogForm setBlogs={setBlogs} setNotification={setNotification} toggleVisibility={toggleVisibility} />
-            )
-          }
+          <Toggable buttonLabel={'create new blog'}>
+            {
+              (toggleVisibility) => (
+                <NewBlogForm setBlogs={setBlogs} setNotification={setNotification} toggleVisibility={toggleVisibility} />
+              )
+            }
           </Toggable>
           {blogs.sort(compareBlogs).map(blog =>
             <Blog key={blog.id} user={user} blog={blog} setBlogs={setBlogs} setNotification={setNotification} />

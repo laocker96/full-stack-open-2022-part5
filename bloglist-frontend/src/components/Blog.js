@@ -42,13 +42,13 @@ const Blog = ({ user, blog, setBlogs, setNotification }) => {
   }
 
   return (
-    <>
-      <div style={blogStyle}>
+    <div className='blog'>
+      <div style={blogStyle} className='visibleBlogContent'>
         {blog.title} {blog.author}
         <button onClick={() => setDetailsVisible(!detailsVisible)}>{!detailsVisible ? 'view' : 'hide'}</button>
       </div>
       {detailsVisible &&
-        <div style={blogStyle}>
+        <div style={blogStyle} className='hiddenBlogContent'>
           <a href={blog.url}>{blog.url}</a>
           <div>
             likes {blog.likes}
@@ -62,7 +62,7 @@ const Blog = ({ user, blog, setBlogs, setNotification }) => {
           }
         </div>
       }
-    </>
+    </div>
   )
 }
 
